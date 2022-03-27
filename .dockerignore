@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+Dockerfile
+Makefile
+.dockerignore
+package-lock.json
+.vs
+.vsignore
+*.log
+.git
+.gitignore
+.cache
