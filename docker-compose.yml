@@ -16,6 +16,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
 
   build:
+    command: yarn build
     build:
       target: production
       context: .
@@ -23,6 +24,20 @@ services:
     container_name: build
     volumes:
       - .:/app
+
+  # Nginx
+  webserver:
+    depends_on:
+      - build
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: nginx
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"    
 
 volumes:
   node_modules:
