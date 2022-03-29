@@ -16,7 +16,8 @@ services:
       - CHOKIDAR_USEPOLLING=true
 
   build:
-    command: yarn build
+    # command: ["docker", "cp", "build:/app/dist", "."]
+    # command: docker cp build:/app/dist .
     build:
       target: production
       context: .
