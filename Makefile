@@ -1,10 +1,11 @@
 dev:
-	docker-compose up develop
+	docker compose down
+	docker compose up develop
 
 build:
-	sudo rm -r -f dist
-	docker-compose up build
+	docker compose down
+	docker compose up --build build
 
 server:
-	sudo rm -r -f dist
-	docker-compose up webserver
+	docker compose down
+	docker compose up --build webserver
