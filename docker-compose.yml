@@ -1,12 +1,12 @@
 version: '3.8'
 services:
   develop:
-    command: yarn serve
+    command: yarn dev
     build:
-      target: develop
+      target: frontend
       context: .
       dockerfile: ./Dockerfile
-    container_name: develop
+    container_name: frontend_dev
     ports:
       - "8080:8080"
     volumes:
@@ -16,15 +16,15 @@ services:
       - CHOKIDAR_USEPOLLING=true
 
   build:
-    # command: ["docker", "cp", "build:/app/dist", "."]
-    # command: docker cp build:/app/dist .
+    command: yarn build
     build:
-      target: production
+      target: frontend
       context: .
       dockerfile: ./Dockerfile
-    container_name: build
+    container_name: frontend_build
     volumes:
       - .:/app
+      - node_modules:/app/node_modules
 
   # Nginx
   webserver:
@@ -38,7 +38,9 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "80:80"    
+      - "80:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html  
 
 volumes:
   node_modules:

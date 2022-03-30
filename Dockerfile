@@ -1,4 +1,4 @@
-FROM node:16.14.2-alpine3.14 as develop
+FROM node:16.14.2-alpine3.14 as frontend
 
 WORKDIR /app
 
@@ -27,15 +27,8 @@ RUN yarn
 
 EXPOSE 8080
 
-# For build
-FROM develop as production
-WORKDIR /app
-COPY . .
-RUN yarn build
-
 # webserver
-FROM nginx:1.21.6-alpine as nginx
-COPY --from=production /app/dist /usr/share/nginx/html
+FROM nginx:1.21.6-alpine as webserver
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

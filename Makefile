@@ -4,11 +4,9 @@ dev:
 
 build:
 	docker compose down
-	docker compose up --build build
-	docker create -ti --name testbuild docker-test_build:latest bash
-	docker cp testbuild:/app/dist .
-	docker rm -f testbuild
+	docker compose up build
 
 server:
 	docker compose down
-	docker compose up --build webserver
+	docker compose up build
+	docker compose up webserver
